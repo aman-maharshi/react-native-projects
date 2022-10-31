@@ -3,29 +3,22 @@ import { StyleSheet, Text, View, TextInput, Button } from "react-native"
 
 const styles = StyleSheet.create({
     appContainer: {
-        paddingTop: 40,
-        paddingHorizontal: 20
+        paddingTop: 60,
+        paddingHorizontal: 16
     },
-    textContainer: {
+    inputContainer: {
         flexDirection: "row",
-        marginBottom: 10,
-        alignItems: "center"
+        justifyContent: "space-between",
+        marginBottom: 20
+        // borderWidth: 1,
+        // borderColor: "red"
     },
     textInput: {
         flex: 1,
         borderWidth: 1,
-        borderColor: "lightgray",
-        padding: 10,
-        marginRight: 10
-    },
-    goalsContainer: {
-        borderWidth: 1,
-        borderColor: "lightgray"
-    },
-    singleGoal: {
-        padding: 5,
-        marginBottom: 5,
-        backgroundColor: "lightpink"
+        borderColor: "#cccccc",
+        marginRight: 20,
+        padding: 10
     }
 })
 
@@ -40,18 +33,12 @@ const App = () => {
 
     return (
         <View style={styles.appContainer}>
-            <View style={styles.textContainer}>
-                <TextInput value={goal} onChange={e => setGoal(e.target.value)} style={styles.textInput} placeholder="Whats on your mind?" />
-                <Button onPress={addGoal} title="Add" color="#841584"></Button>
+            <View style={styles.inputContainer}>
+                <TextInput style={styles.textInput} placeholder="Your course goal!"></TextInput>
+                <Button title="Add Goal"></Button>
             </View>
-            <View style={styles.goalsContainer}>
-                {goalList.map(item => {
-                    return (
-                        <Text key={item} style={styles.singleGoal}>
-                            {item}
-                        </Text>
-                    )
-                })}
+            <View>
+                <Text>List of goals</Text>
             </View>
         </View>
     )
