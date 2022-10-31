@@ -1,5 +1,9 @@
 import { useState } from "react"
-import { StyleSheet, Text, View, TextInput, Button } from "react-native"
+import { StyleSheet, Text, View, ScrollView, FlatList } from "react-native"
+import GoalInput from "./components/GoalInput"
+
+// COMPONENTS
+import GoalItem from "./components/GoalItem"
 
 const styles = StyleSheet.create({
     appContainer: {
@@ -7,60 +11,49 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16,
         flex: 1
     },
-    inputContainer: {
-        flex: 1,
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        marginBottom: 20,
-        borderBottomWidth: 1,
-        borderColor: "#cccccc"
-    },
-    textInput: {
-        flex: 1,
-        borderWidth: 1,
-        borderColor: "#cccccc",
-        marginRight: 20,
-        padding: 10
-    },
     goalsContainer: {
         flex: 5
-    },
-    goalItem: {
-        padding: 10,
-        marginBottom: 14,
-        borderRadius: 6,
-        backgroundColor: "#5e0acc"
-    },
-    goalText: {
-        color: "white"
     }
 })
 
 const App = () => {
-    const [goal, setGoal] = useState("")
     const [goalList, setGoalList] = useState([])
 
-    const handleGoalInputChange = value => {
-        setGoal(value)
-    }
-
-    const handleAddGoal = () => {
-        setGoalList(prevGoalList => [...prevGoalList, goal])
+    const handleAddGoal = goalValue => {
+        setGoalList(prevGoalList => [
+            ...prevGoalList,
+            {
+                text: goalValue,
+                id: Math.random().toString()
+            }
+        ])
     }
 
     return (
         <View style={styles.appContainer}>
-            <View style={styles.inputContainer}>
-                <TextInput onChangeText={handleGoalInputChange} style={styles.textInput} placeholder="Your course goal!"></TextInput>
-                <Button onPress={handleAddGoal} title="Add Goal"></Button>
-            </View>
+            <GoalInput handleAddGoal={handleAddGoal} />
             <View style={styles.goalsContainer}>
-                {goalList.map(item => (
-                    <View key={item} style={styles.goalItem}>
-                        <Text style={styles.goalText}>{item}</Text>
-                    </View>
-                ))}
+                {/* <FlatList
+                    data={goalList}
+                    renderItem={itemData => {
+                        return (
+                            <View key={itemData.index} style={styles.goalItem}>
+                                <Text style={styles.goalText}>{itemData.item}</Text>
+                            </View>
+                        )
+                    }}
+                    alwaysBounceVertical={false}
+                /> */}
+                <FlatList
+                    data={goalList}
+                    renderItem={itemData => {
+                        return <GoalItem itemData={itemData} />
+                    }}
+                    keyExtractor={(item, index) => {
+                        return item.id
+                    }}
+                    alwaysBounceVertical={false}
+                />
             </View>
         </View>
     )
