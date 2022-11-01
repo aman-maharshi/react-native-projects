@@ -13,6 +13,9 @@ const styles = StyleSheet.create({
     },
     goalsContainer: {
         flex: 5
+    },
+    noGoalsText: {
+        color: "#34495e"
     }
 })
 
@@ -20,19 +23,28 @@ const App = () => {
     const [goalList, setGoalList] = useState([])
 
     const handleAddGoal = goalValue => {
-        setGoalList(prevGoalList => [
-            ...prevGoalList,
-            {
-                text: goalValue,
-                id: Math.random().toString()
-            }
-        ])
+        if (goalValue) {
+            setGoalList(prevGoalList => [
+                ...prevGoalList,
+                {
+                    text: goalValue,
+                    id: Math.random().toString()
+                }
+            ])
+        }
+    }
+
+    const handleDeleteGoal = id => {
+        setGoalList(currentGoalList => {
+            return currentGoalList.filter(item => item.id !== id)
+        })
     }
 
     return (
         <View style={styles.appContainer}>
             <GoalInput handleAddGoal={handleAddGoal} />
             <View style={styles.goalsContainer}>
+                {goalList.length === 0 && <Text style={styles.noGoalsText}>No goals added yet!</Text>}
                 {/* <FlatList
                     data={goalList}
                     renderItem={itemData => {
@@ -47,7 +59,7 @@ const App = () => {
                 <FlatList
                     data={goalList}
                     renderItem={itemData => {
-                        return <GoalItem itemData={itemData} />
+                        return <GoalItem itemData={itemData} handleDeleteGoal={handleDeleteGoal} />
                     }}
                     keyExtractor={(item, index) => {
                         return item.id
