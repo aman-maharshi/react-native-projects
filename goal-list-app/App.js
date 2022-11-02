@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { StyleSheet, Text, View, ScrollView, FlatList } from "react-native"
+import { StyleSheet, Text, View, ScrollView, FlatList, Button } from "react-native"
 import GoalInput from "./components/GoalInput"
 
 // COMPONENTS
@@ -12,15 +12,19 @@ const styles = StyleSheet.create({
         flex: 1
     },
     goalsContainer: {
-        flex: 5
+        flex: 5,
+        marginTop: 16
     },
     noGoalsText: {
-        color: "#34495e"
+        color: "#34495e",
+        marginTop: 10,
+        textAlign: "center"
     }
 })
 
 const App = () => {
     const [goalList, setGoalList] = useState([])
+    const [showModal, setShowModal] = useState(false)
 
     const handleAddGoal = goalValue => {
         if (goalValue) {
@@ -40,9 +44,18 @@ const App = () => {
         })
     }
 
+    const openModal = () => {
+        setShowModal(true)
+    }
+
+    const closeModal = () => {
+        setShowModal(false)
+    }
+
     return (
         <View style={styles.appContainer}>
-            <GoalInput handleAddGoal={handleAddGoal} />
+            <Button onPress={openModal} title="Add New Goal" color="#5e0acc"></Button>
+            <GoalInput handleAddGoal={handleAddGoal} showModal={showModal} closeModal={closeModal} />
             <View style={styles.goalsContainer}>
                 {goalList.length === 0 && <Text style={styles.noGoalsText}>No goals added yet!</Text>}
                 {/* <FlatList
