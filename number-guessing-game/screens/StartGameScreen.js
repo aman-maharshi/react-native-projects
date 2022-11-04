@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 24,
         borderRadius: 8,
         padding: 16,
-        backgroundColor: "#72063c",
+        backgroundColor: "#3b021f",
         // android box shadow
         elevation: 8,
         // ios box shadow
@@ -16,26 +16,50 @@ const styles = StyleSheet.create({
         shadowRadius: 6,
         shadowOpacity: 0.25
     },
+    numberInputContainer: {
+        flexDirection: "row",
+        justifyContent: "center"
+    },
     numberInput: {
         height: 50,
         width: 50,
         fontSize: 32,
-        marginVertical: 8,
         fontWeight: "bold",
         color: "#ddb52f",
         borderBottomWidth: 2,
         borderBottomColor: "#ddb52f",
         textAlign: "center"
+    },
+    buttonContainer: {
+        marginTop: 16,
+        flexDirection: "row",
+        justifyContent: "space-evenly"
+    },
+    buttonWrapper: {
+        flex: 1
     }
 })
 
 const StartGameScreen = () => {
     return (
         <View style={styles.inputContainer}>
-            <TextInput style={styles.numberInput} maxLength={2} placeholderTextColor="#997c24" />
-            <View>
-                <PrimaryButton>Reset</PrimaryButton>
-                <PrimaryButton>Confirm</PrimaryButton>
+            <View style={styles.numberInputContainer}>
+                {/* prettier-ignore */}
+                <TextInput
+                    style={styles.numberInput}
+                    maxLength={2}
+                    keyboardType="number-pad"
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                />
+            </View>
+            <View style={styles.buttonContainer}>
+                <View style={styles.buttonWrapper}>
+                    <PrimaryButton>Reset</PrimaryButton>
+                </View>
+                <View style={styles.buttonWrapper}>
+                    <PrimaryButton>Confirm</PrimaryButton>
+                </View>
             </View>
         </View>
     )
