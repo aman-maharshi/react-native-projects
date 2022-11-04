@@ -1,5 +1,60 @@
-import { TextInput, View, StyleSheet } from "react-native"
+import { useState } from "react"
+import { TextInput, View, StyleSheet, Alert } from "react-native"
 import PrimaryButton from "../components/PrimaryButton"
+
+const StartGameScreen = ({ setScreenNumber, setUserNumber }) => {
+    const [enteredNumber, setEnteredNumber] = useState("")
+
+    const handleInputChange = value => {
+        setEnteredNumber(value)
+    }
+
+    const handleReset = () => {
+        setEnteredNumber("")
+    }
+
+    const handleConfirm = () => {
+        const chosenNumber = parseInt(enteredNumber)
+        if (isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 99) {
+            // prettier-ignore
+            Alert.alert(
+                "Invalid Number",
+                "Number has to be between 1 and 99",
+                [{text: "Okay", style: "default", onPress: handleReset}]
+            )
+            return
+        }
+        setUserNumber(chosenNumber)
+        setScreenNumber(2)
+    }
+
+    return (
+        <View style={styles.inputContainer}>
+            <View style={styles.numberInputContainer}>
+                {/* prettier-ignore */}
+                <TextInput
+                    value={enteredNumber}
+                    onChangeText={handleInputChange}
+                    style={styles.numberInput}
+                    maxLength={2}
+                    keyboardType="number-pad"
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                />
+            </View>
+            <View style={styles.buttonContainer}>
+                <View style={styles.buttonWrapper}>
+                    <PrimaryButton onPressFunction={handleReset}>Reset</PrimaryButton>
+                </View>
+                <View style={styles.buttonWrapper}>
+                    <PrimaryButton onPressFunction={handleConfirm}>Confirm</PrimaryButton>
+                </View>
+            </View>
+        </View>
+    )
+}
+
+export default StartGameScreen
 
 const styles = StyleSheet.create({
     inputContainer: {
@@ -39,30 +94,3 @@ const styles = StyleSheet.create({
         flex: 1
     }
 })
-
-const StartGameScreen = () => {
-    return (
-        <View style={styles.inputContainer}>
-            <View style={styles.numberInputContainer}>
-                {/* prettier-ignore */}
-                <TextInput
-                    style={styles.numberInput}
-                    maxLength={2}
-                    keyboardType="number-pad"
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                />
-            </View>
-            <View style={styles.buttonContainer}>
-                <View style={styles.buttonWrapper}>
-                    <PrimaryButton>Reset</PrimaryButton>
-                </View>
-                <View style={styles.buttonWrapper}>
-                    <PrimaryButton>Confirm</PrimaryButton>
-                </View>
-            </View>
-        </View>
-    )
-}
-
-export default StartGameScreen
