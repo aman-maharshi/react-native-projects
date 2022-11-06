@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { TextInput, View, StyleSheet, Alert } from "react-native"
+import Colors from "../constants/colors"
 import PrimaryButton from "../components/PrimaryButton"
 
 const StartGameScreen = ({ setScreenNumber, setUserNumber }) => {
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 24,
         borderRadius: 8,
         padding: 16,
-        backgroundColor: "#3b021f",
+        backgroundColor: Colors.primary800,
         // android box shadow
         elevation: 8,
         // ios box shadow
@@ -80,9 +81,9 @@ const styles = StyleSheet.create({
         width: 50,
         fontSize: 32,
         fontWeight: "bold",
-        color: "#ddb52f",
+        color: Colors.accent500,
         borderBottomWidth: 2,
-        borderBottomColor: "#ddb52f",
+        borderBottomColor: Colors.accent500,
         textAlign: "center"
     },
     buttonContainer: {
