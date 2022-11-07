@@ -12,8 +12,8 @@ const styles = StyleSheet.create({
         fontSize: 24,
         padding: 12,
         borderWidth: 2,
-        borderColor: Colors.accent500,
+        borderColor: "white",
         fontWeight: "bold",
-        color: Colors.accent500
+        color: "white"
     }
 })
