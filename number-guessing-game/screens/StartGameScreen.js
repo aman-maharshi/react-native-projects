@@ -16,11 +16,11 @@ const StartGameScreen = ({ setScreenNumber, setUserNumber }) => {
 
     const handleConfirm = () => {
         const chosenNumber = parseInt(enteredNumber)
-        if (isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 99) {
+        if (isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 9) {
             // prettier-ignore
             Alert.alert(
                 "Invalid Number",
-                "Number has to be between 1 and 99",
+                "Number has to be between 1 and 9",
                 [{text: "Okay", style: "default", onPress: handleReset}]
             )
             return
