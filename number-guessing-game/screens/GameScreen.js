@@ -1,8 +1,9 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { View, StyleSheet, Text, Button, Alert } from "react-native"
 import NumberComponent from "../components/NumberComponent"
 import PrimaryButton from "../components/PrimaryButton"
 import Title from "../components/Title"
+import Colors from "../constants/colors"
 
 const generateRandomBetween = (min, max, exclude) => {
     const rndNum = Math.floor(Math.random() * (max - min)) + min
@@ -17,6 +18,12 @@ const generateRandomBetween = (min, max, exclude) => {
 const GameScreen = ({ setScreenNumber, userNumber }) => {
     const initialGuess = generateRandomBetween(1, 10, userNumber)
     const [currentGuess, setCurrentGuess] = useState(initialGuess)
+
+    useEffect(() => {
+        if (currentGuess === userNumber) {
+            setScreenNumber(3)
+        }
+    }, [currentGuess])
 
     const increment = () => {
         if (currentGuess > userNumber) {
@@ -36,37 +43,26 @@ const GameScreen = ({ setScreenNumber, userNumber }) => {
         setCurrentGuess(number)
     }
 
-    const playAgain = () => {
-        setScreenNumber(1)
-    }
-
     return (
-        <View style={styles.screen}>
-            <Title>Computer's Guess</Title>
-            <NumberComponent>{currentGuess}</NumberComponent>
-            <View>
-                <Text style={styles.text}>Higher or Lower</Text>
-                <View style={styles.buttonContainer}>
-                    <View style={styles.buttonWrapper}>
-                        <PrimaryButton onPressFunction={decrement}> - </PrimaryButton>
-                    </View>
-                    <View style={styles.buttonWrapper}>
-                        <PrimaryButton onPressFunction={increment}> + </PrimaryButton>
+        <>
+            <View style={styles.screen}>
+                <Title>Computer's Guess</Title>
+            </View>
+            <View style={styles.inputContainer}>
+                <NumberComponent>{currentGuess}</NumberComponent>
+                <View>
+                    <Text style={styles.text}>Higher or Lower</Text>
+                    <View style={styles.buttonContainer}>
+                        <View style={styles.buttonWrapper}>
+                            <PrimaryButton onPressFunction={decrement}> - </PrimaryButton>
+                        </View>
+                        <View style={styles.buttonWrapper}>
+                            <PrimaryButton onPressFunction={increment}> + </PrimaryButton>
+                        </View>
                     </View>
                 </View>
-
-                {currentGuess === userNumber && (
-                    <>
-                        <Text style={styles.win}>Correct guess, You win!</Text>
-                        <View style={styles.buttonContainer}>
-                            <View style={styles.buttonWrapper}>
-                                <PrimaryButton onPressFunction={playAgain}> Play Again </PrimaryButton>
-                            </View>
-                        </View>
-                    </>
-                )}
             </View>
-        </View>
+        </>
     )
 }
 
@@ -74,9 +70,22 @@ export default GameScreen
 
 const styles = StyleSheet.create({
     screen: {
-        flex: 1,
-        padding: 24,
-        paddingTop: 80
+        paddingTop: 80,
+        alignItems: "center"
+    },
+    inputContainer: {
+        marginTop: 40,
+        marginHorizontal: 24,
+        borderRadius: 8,
+        padding: 16,
+        backgroundColor: Colors.primary800,
+        // android box shadow
+        elevation: 8,
+        // ios box shadow
+        shadowColor: "black",
+        shadowOffset: { width: 0, height: 2 },
+        shadowRadius: 6,
+        shadowOpacity: 0.25
     },
     buttonContainer: {
         marginTop: 16,

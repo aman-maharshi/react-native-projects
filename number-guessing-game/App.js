@@ -6,6 +6,7 @@ import Colors from "./constants/colors"
 
 import StartGameScreen from "./screens/StartGameScreen"
 import GameScreen from "./screens/GameScreen"
+import GameOverScreen from "./screens/GameOverScreen"
 
 const App = () => {
     const [screenNumber, setScreenNumber] = useState(1)
@@ -17,6 +18,8 @@ const App = () => {
                 return <StartGameScreen setScreenNumber={setScreenNumber} setUserNumber={setUserNumber} />
             case 2:
                 return <GameScreen setScreenNumber={setScreenNumber} userNumber={userNumber} />
+            case 3:
+                return <GameOverScreen setScreenNumber={setScreenNumber} userNumber={userNumber} />
             default:
                 return <StartGameScreen setScreenNumber={setScreenNumber} />
         }
