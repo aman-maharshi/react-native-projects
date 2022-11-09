@@ -54,10 +54,14 @@ const GameScreen = ({ setScreenNumber, userNumber }) => {
                     <Text style={styles.text}>Higher or Lower</Text>
                     <View style={styles.buttonContainer}>
                         <View style={styles.buttonWrapper}>
-                            <PrimaryButton onPressFunction={decrement}> - </PrimaryButton>
+                            <PrimaryButton onPressFunction={decrement}>
+                                <FontAwesome name="minus" size={24} color="white" />
+                            </PrimaryButton>
                         </View>
                         <View style={styles.buttonWrapper}>
-                            <PrimaryButton onPressFunction={increment}> + </PrimaryButton>
+                            <PrimaryButton onPressFunction={increment}>
+                                <FontAwesome name="plus" size={24} color="white" />
+                            </PrimaryButton>
                         </View>
                     </View>
                 </View>
