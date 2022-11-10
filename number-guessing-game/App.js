@@ -14,15 +14,16 @@ import GameOverScreen from "./screens/GameOverScreen"
 const App = () => {
     const [screenNumber, setScreenNumber] = useState(1)
     const [userNumber, setUserNumber] = useState()
+    const [numberOfRounds, setNumberOfRounds] = useState(0)
 
     const getScreen = () => {
         switch (screenNumber) {
             case 1:
                 return <StartGameScreen setScreenNumber={setScreenNumber} setUserNumber={setUserNumber} />
             case 2:
-                return <GameScreen setScreenNumber={setScreenNumber} userNumber={userNumber} />
+                return <GameScreen setScreenNumber={setScreenNumber} userNumber={userNumber} setNumberOfRounds={setNumberOfRounds} />
             case 3:
-                return <GameOverScreen setScreenNumber={setScreenNumber} userNumber={userNumber} />
+                return <GameOverScreen setScreenNumber={setScreenNumber} userNumber={userNumber} numberOfRounds={numberOfRounds} setNumberOfRounds={setNumberOfRounds} />
             default:
                 return <StartGameScreen setScreenNumber={setScreenNumber} />
         }

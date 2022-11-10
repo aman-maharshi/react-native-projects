@@ -4,6 +4,7 @@ import NumberComponent from "../components/NumberComponent"
 import PrimaryButton from "../components/PrimaryButton"
 import Title from "../components/Title"
 import Colors from "../constants/colors"
+import { FontAwesome } from "@expo/vector-icons"
 
 const generateRandomBetween = (min, max, exclude) => {
     const rndNum = Math.floor(Math.random() * (max - min)) + min
@@ -15,7 +16,7 @@ const generateRandomBetween = (min, max, exclude) => {
     }
 }
 
-const GameScreen = ({ setScreenNumber, userNumber }) => {
+const GameScreen = ({ setScreenNumber, userNumber, setNumberOfRounds }) => {
     const initialGuess = generateRandomBetween(1, 10, userNumber)
     const [currentGuess, setCurrentGuess] = useState(initialGuess)
 
@@ -31,6 +32,7 @@ const GameScreen = ({ setScreenNumber, userNumber }) => {
             return
         }
         const number = generateRandomBetween(currentGuess + 1, 10, currentGuess)
+        setNumberOfRounds(prev => prev + 1)
         setCurrentGuess(number)
     }
 
@@ -40,13 +42,14 @@ const GameScreen = ({ setScreenNumber, userNumber }) => {
             return
         }
         const number = generateRandomBetween(1, currentGuess, currentGuess)
+        setNumberOfRounds(prev => prev + 1)
         setCurrentGuess(number)
     }
 
     return (
         <>
             <View style={styles.screen}>
-                <Title>Computer's Guess</Title>
+                <Title>Your Phone's Guess</Title>
             </View>
             <View style={styles.inputContainer}>
                 <NumberComponent>{currentGuess}</NumberComponent>
