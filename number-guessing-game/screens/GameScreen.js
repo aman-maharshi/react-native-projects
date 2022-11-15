@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { View, StyleSheet, Text, Button, Alert } from "react-native"
+import { View, StyleSheet, Text, Button, Alert, FlatList } from "react-native"
 import NumberComponent from "../components/NumberComponent"
 import PrimaryButton from "../components/PrimaryButton"
 import Title from "../components/Title"
@@ -19,11 +19,13 @@ const generateRandomBetween = (min, max, exclude) => {
 const GameScreen = ({ setScreenNumber, userNumber, setNumberOfRounds }) => {
     const initialGuess = generateRandomBetween(1, 10, userNumber)
     const [currentGuess, setCurrentGuess] = useState(initialGuess)
+    const [guessList, setGuessList] = useState([])
 
     useEffect(() => {
         if (currentGuess === userNumber) {
             setScreenNumber(3)
         }
+        setGuessList(prev => [...prev, currentGuess])
     }, [currentGuess])
 
     const increment = () => {
@@ -69,6 +71,18 @@ const GameScreen = ({ setScreenNumber, userNumber, setNumberOfRounds }) => {
                     </View>
                 </View>
             </View>
+            <View style={styles.logWrapper}>
+                <FlatList
+                    data={guessList}
+                    renderItem={itemData => (
+                        <View style={styles.logContainer}>
+                            <Text style={styles.logText}># {itemData.index + 1}</Text>
+                            <Text style={styles.logText}>Guessed : {itemData.item}</Text>
+                        </View>
+                    )}
+                    keyExtractor={(item, index) => index}
+                />
+            </View>
         </>
     )
 }
@@ -92,7 +106,8 @@ const styles = StyleSheet.create({
         shadowColor: "black",
         shadowOffset: { width: 0, height: 2 },
         shadowRadius: 6,
-        shadowOpacity: 0.25
+        shadowOpacity: 0.25,
+        marginBottom: 10
     },
     buttonContainer: {
         marginTop: 16,
@@ -115,5 +130,26 @@ const styles = StyleSheet.create({
         textAlign: "center",
         fontWeight: "bold",
         marginTop: 10
+    },
+    logWrapper: {
+        flex: 1,
+        padding: 10
+    },
+    logContainer: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        borderWidth: 2,
+        borderColor: Colors.primary600,
+        paddingVertical: 8,
+        paddingHorizontal: 16,
+        borderRadius: 20,
+        marginHorizontal: 24,
+        marginVertical: 5,
+        backgroundColor: Colors.accent500
+    },
+    logText: {
+        fontWeight: "bold",
+        color: Colors.primary600
     }
 })
