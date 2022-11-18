@@ -1,11 +1,13 @@
 import { useState } from "react"
-import { TextInput, View, StyleSheet, Alert, Text } from "react-native"
+import { TextInput, View, StyleSheet, Alert, Text, useWindowDimensions, KeyboardAvoidingView, ScrollView } from "react-native"
 import Colors from "../constants/colors"
 import PrimaryButton from "../components/PrimaryButton"
 import Title from "../components/Title"
 
 const StartGameScreen = ({ setScreenNumber, setUserNumber }) => {
     const [enteredNumber, setEnteredNumber] = useState("")
+    const { width, height } = useWindowDimensions()
+    const pTop = height < 380 ? 40 : 80
 
     const handleInputChange = value => {
         setEnteredNumber(value)
@@ -31,15 +33,16 @@ const StartGameScreen = ({ setScreenNumber, setUserNumber }) => {
     }
 
     return (
-        <>
-            <View style={styles.screen}>
-                <Title>Guess My Number</Title>
-            </View>
-            <View style={styles.inputContainer}>
-                <Text style={styles.instructionText}>Enter a Number</Text>
-                <View style={styles.numberInputContainer}>
-                    {/* prettier-ignore */}
-                    <TextInput
+        <ScrollView style={styles.flexOne}>
+            <KeyboardAvoidingView style={styles.flexOne} behavior="position">
+                <View style={[styles.screen, { paddingTop: pTop }]}>
+                    <Title>Guess My Number</Title>
+                </View>
+                <View style={styles.inputContainer}>
+                    <Text style={styles.instructionText}>Enter a Number</Text>
+                    <View style={styles.numberInputContainer}>
+                        {/* prettier-ignore */}
+                        <TextInput
                     value={enteredNumber}
                     onChangeText={handleInputChange}
                     style={styles.numberInput}
@@ -48,26 +51,29 @@ const StartGameScreen = ({ setScreenNumber, setUserNumber }) => {
                     autoCapitalize="none"
                     autoCorrect={false}
                 />
-                </View>
-                <View style={styles.buttonContainer}>
-                    <View style={styles.buttonWrapper}>
-                        <PrimaryButton onPressFunction={handleReset}>Reset</PrimaryButton>
                     </View>
-                    <View style={styles.buttonWrapper}>
-                        <PrimaryButton onPressFunction={handleConfirm}>Confirm</PrimaryButton>
+                    <View style={styles.buttonContainer}>
+                        <View style={styles.buttonWrapper}>
+                            <PrimaryButton onPressFunction={handleReset}>Reset</PrimaryButton>
+                        </View>
+                        <View style={styles.buttonWrapper}>
+                            <PrimaryButton onPressFunction={handleConfirm}>Confirm</PrimaryButton>
+                        </View>
                     </View>
                 </View>
-            </View>
-        </>
+            </KeyboardAvoidingView>
+        </ScrollView>
     )
 }
 
 export default StartGameScreen
 
 const styles = StyleSheet.create({
+    flexOne: {
+        flex: 1
+    },
     screen: {
         marginHorizontal: 24,
-        paddingTop: 80,
         alignItems: "center"
     },
     inputContainer: {
